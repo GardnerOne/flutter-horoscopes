@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -8,7 +9,7 @@ final Color primaryDark  = Color(0xff011c26);
 final Color accent       = Color(0xfff29f80);
 final Color accentLight  = Color(0xfff2f2f2);
 
-// AdMob
+// TODO: Link admob and firebase (see console at runtime)
 /*
  * Banner - Rectangular ads that occupy a portion of an app's layout; can be refreshed automatically after a period of time.
  * Interstitial - Full-page ad format that appears at natural breaks and transitions, such as level completion.
@@ -21,12 +22,15 @@ final Color accentLight  = Color(0xfff2f2f2);
 
 final adType = 'interstitial';
 final name = 'AI Horoscopes';
-final appId = 'ca-app-pub-9316305210151016~7303149109';
-final adUnitId = 'ca-app-pub-9316305210151016/7079787823';
+final appId = 'ca-app-pub-9316305210151016~2962974062';
+final androidAdUnitId = 'ca-app-pub-9316305210151016/7079787823';
+final iOSAdUnitId = 'ca-app-pub-9316305210151016/9308890563';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseAdMob.instance.initialize(appId: appId);
+
     return MaterialApp(
       title: 'AI Horoscopes',
       home: MyHomePage(title: 'AI Horoscopes'),
@@ -44,6 +48,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  static MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    keywords: <String>['flutter', 'horoscope', 'tarot', 'magical', 'mystical'],
+    contentUrl: 'https://flutter.io', // TODO
+    childDirected: false,
+    testDevices: <String>[],
+  );
+
+  InterstitialAd interstitialAd = InterstitialAd(
+    adUnitId: iOSAdUnitId,
+    targetingInfo: targetingInfo,
+    listener: (MobileAdEvent event) {
+      print("InterstitialAd event is $event");
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -65,27 +84,42 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: _drawer(),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            stops: [0.0, 0.06, 0.9],
-            colors: [
-              Colors.black,
-              primaryDark,
-              primary
-            ],
-          )
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.bottomCenter,
+        //     end: Alignment.topCenter,
+        //     stops: [0.0, 0.06, 0.9],
+        //     colors: [
+        //       Colors.black,
+        //       primaryDark,
+        //       primary
+        //     ],
+        //   )
+        // ),
+        child: _cards(),
+      ),
+    );
+  }
+
+  Widget _cards() {
+    return Center(
+      child: Dismissible(
+        key: ValueKey("top"),
+        child: Card(
+          elevation: 4,
+          color: accentLight,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Container(
+            width: 300,
+            height: 550,
+            child: Center(child: Text("Card info goes here")),
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[],
-            ),
-          ],
-        ),
+        onDismissed: (DismissDirection direction) {
+          // TODO: show next card
+        },
       ),
     );
   }
@@ -145,7 +179,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               onTap: () {
-                // TODO: show ad
+                interstitialAd..load()..show(
+                  anchorOffset: 0.0,
+                  anchorType: AnchorType.bottom,
+                );
               },
             ),
           ],

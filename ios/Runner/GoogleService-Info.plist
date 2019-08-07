@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>594499308788-0d570143sej7u2ukc7jpv7oaj8g25be4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.594499308788-0d570143sej7u2ukc7jpv7oaj8g25be4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDiuUWLCAWhz48prqE2HxGLlBl_1czUwvo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>594499308788</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>uk.co.gardnerone.ai-horoscopes</string>
+	<key>PROJECT_ID</key>
+	<string>ai-horoscopes</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ai-horoscopes.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:594499308788:ios:1d9582a867046d68</string>
+	<key>DATABASE_URL</key>
+	<string>https://ai-horoscopes.firebaseio.com</string>
+</dict>
+</plist>
